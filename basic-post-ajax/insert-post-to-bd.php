@@ -33,20 +33,17 @@ $post_data = array('ID' => $post_id);
 CFS()->save($field_data, $post_data);
 
 // Set custom taxonomy for posted object
-// $termObj  = get_term_by('id', $realty_type_id, 'realty_type');
 wp_set_object_terms($post_id, array($realty_type_slug), 'realty_type');
 
 
 // Works with Image
 if (isset($_POST['thumbnail_nonce']) && wp_verify_nonce($_POST['thumbnail_nonce'], 'thumbnail')) {
 
-    // Эти файлы должны быть подключены в лицевой части (фронт-энде).
+    // We need it
     require_once(ABSPATH . 'wp-admin/includes/image.php');
     require_once(ABSPATH . 'wp-admin/includes/file.php');
     require_once(ABSPATH . 'wp-admin/includes/media.php');
 
-    // Позволим WordPress перехватить загрузку.
-    // не забываем указать атрибут name поля input - 'my_image_upload'
     $attachment_id = media_handle_upload('thumbnail', $post_id);
 
     if (is_wp_error($attachment_id)) {
